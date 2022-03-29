@@ -43,6 +43,7 @@
         android:layout_marginStart="8dp"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/bottomPlayerControlButton"
         app:layout_constraintEnd_toStartOf="@id/bottomPlayerControlButton"
         app:layout_constraintStart_toEndOf="@id/playerView"

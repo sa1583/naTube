@@ -88,7 +88,6 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
             player?.addListener(object : Player.Listener {
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
                     super.onIsPlayingChanged(isPlaying)
-
                     if (isPlaying) {
                         it.bottomPlayerControlButton.setImageResource(R.drawable.ic_baseline_pause_24)
                     } else {
@@ -102,7 +101,6 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
     private fun initControlButton(fragmentPlayerBinding: FragmentPlayerBinding) {
         fragmentPlayerBinding.bottomPlayerControlButton.setOnClickListener {
             val player = this.player ?: return@setOnClickListener
-
             if (player.isPlaying) {
                 player.pause()
             } else {
@@ -128,7 +126,6 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
                         response.body()?.let { videoDto ->
                             videoAdapter.submitList(videoDto.videos)
                         }
-
                     }
 
                     override fun onFailure(call: Call<VideoDto>, t: Throwable) {
