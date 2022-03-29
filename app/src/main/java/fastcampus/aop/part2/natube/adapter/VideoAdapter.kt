@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import fastcampus.aop.part2.natube.databinding.ItemVideoBinding
 import fastcampus.aop.part2.natube.model.VideoModel
 
-class VideoAdapter: ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
+class VideoAdapter(val callback: (String, String) -> Unit): ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemVideoBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: VideoModel) {
             binding.apply {
@@ -19,6 +19,10 @@ class VideoAdapter: ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
                 Glide.with(thumbnailImageView)
                     .load(item.thumb)
                     .into(thumbnailImageView)
+
+                root.setOnClickListener {
+                    callback(item.sources, item.title)
+                }
             }
         }
     }
