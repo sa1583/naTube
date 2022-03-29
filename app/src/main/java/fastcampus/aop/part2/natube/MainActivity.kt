@@ -24,11 +24,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.fragmentContainer.bringToFront()
+        //binding.fragmentContainer.bringToFront()
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, PlayerFragment())
             .commit()
+
         videoAdapter = VideoAdapter(callback = { url, title ->
             supportFragmentManager.fragments.find { it is PlayerFragment }?.let {
                 (it as PlayerFragment).play(url, title)
