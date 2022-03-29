@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import fastcampus.aop.part2.natube.adapter.VideoAdapter
+import fastcampus.aop.part2.natube.databinding.ActivityMainBinding
 import fastcampus.aop.part2.natube.dto.VideoDto
 import fastcampus.aop.part2.natube.service.VideoService
 import retrofit2.Call
@@ -13,13 +16,24 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var videoAdapter: VideoAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, PlayerFragment())
             .commit()
+        videoAdapter = VideoAdapter()
+
+        binding.mainRecyclerView.apply {
+            adapter = videoAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+
         getVideoList()
     }
 
@@ -38,8 +52,9 @@ class MainActivity : AppCompatActivity() {
                             return
                         }
                         response.body()?.let { videoDto ->
-                            Log.d("MainActivity", videoDto.toString());
+                            videoAdapter.submitList(videoDto.videos)
                         }
+
                     }
 
                     override fun onFailure(call: Call<VideoDto>, t: Throwable) {
